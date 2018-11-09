@@ -1,14 +1,20 @@
 from flask import render_template, flash, redirect, url_for, request
-from app import app
+from app import app, db
 from app.forms import LoginForm
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User, Post
+from app.models import User
 from werkzeug.urls import url_parse
 
 @app.route("/")
 @app.route("/index")
 @login_required
 def index():
+	posts = [
+		{
+			'author': {'username': 'John'},
+			'body': 'Beautiful day in Portland!'
+		},
+	]
 	return render_template("index.html", title='Home Page', posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
